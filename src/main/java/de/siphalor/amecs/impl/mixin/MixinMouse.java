@@ -100,7 +100,7 @@ public class MixinMouse implements IMouse {
 
 	@SuppressWarnings("InvalidInjectorMethodSignature")
 	@Inject(method = "onMouseScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isSpectator()Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
-	private void isSpectator_onMouseScroll(long window, double rawX, double rawY, CallbackInfo callbackInfo, double deltaY, int scrollAmount) {
+	private void isSpectator_onMouseScroll(long window, double rawX, double rawY, CallbackInfo callbackInfo, boolean bl, double deltaY,double e, double f,  int scrollAmount, int j, int k) {
 		if (AmecsAPI.TRIGGER_KEYBINDING_ON_SCROLL) {
 			onScrollReceived(KeyBindingUtils.getLastScrollAmount(), false, scrollAmount);
 		}
@@ -125,7 +125,7 @@ public class MixinMouse implements IMouse {
 	}
 
 	@Inject(method = "onMouseScroll", at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-	private void onMouseScroll(long window, double rawX, double rawY, CallbackInfo callbackInfo, double deltaY) {
+	private void onMouseScroll(long window, double rawX, double rawY, CallbackInfo callbackInfo, boolean bl, double deltaY, double e, double f) {
 		InputUtil.Key keyCode = KeyBindingUtils.getKeyFromScroll(deltaY);
 
 		// check if we have scroll input for the options screen
