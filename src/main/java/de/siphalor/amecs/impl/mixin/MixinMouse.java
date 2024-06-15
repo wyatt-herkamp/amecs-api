@@ -16,10 +16,7 @@
 
 package de.siphalor.amecs.impl.mixin;
 
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Surrogate;
@@ -43,6 +40,7 @@ import net.minecraft.client.util.InputUtil;
 
 // TODO: Fix the priority when Mixin 0.8 is a thing and try again (-> MaLiLib causes incompatibilities)
 @Environment(EnvType.CLIENT)
+@Debug(export = true)
 @Mixin(value = Mouse.class, priority = -2000)
 public class MixinMouse implements IMouse {
 	@Shadow
@@ -50,7 +48,7 @@ public class MixinMouse implements IMouse {
 	private MinecraftClient client;
 
 	@Shadow
-	private double eventDeltaWheel;
+	private double eventDeltaVerticalWheel;
 
 	@Unique
 	private boolean mouseScrolled_eventUsed;
@@ -72,17 +70,17 @@ public class MixinMouse implements IMouse {
 		if (manualDeltaWheel) {
 			// from minecraft but patched
 			// this code might be wrong when the vanilla mc code changes
-			if (eventDeltaWheel != 0.0D && Math.signum(deltaY) != Math.signum(eventDeltaWheel)) {
-				eventDeltaWheel = 0.0D;
+			if (eventDeltaVerticalWheel != 0.0D && Math.signum(deltaY) != Math.signum(eventDeltaVerticalWheel)) {
+				eventDeltaVerticalWheel = 0.0D;
 			}
 
-			eventDeltaWheel += deltaY;
-			scrollAmount = (int) eventDeltaWheel;
+			eventDeltaVerticalWheel += deltaY;
+			scrollAmount = (int) eventDeltaVerticalWheel;
 			if (scrollAmount == 0) {
 				return;
 			}
 
-			eventDeltaWheel -= scrollAmount;
+			eventDeltaVerticalWheel -= scrollAmount;
 			// -from minecraft
 		}
 

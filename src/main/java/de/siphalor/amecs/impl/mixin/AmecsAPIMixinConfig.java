@@ -46,7 +46,7 @@ public class AmecsAPIMixinConfig implements IMixinConfigPlugin {
 	public void onLoad(String mixinPackage) {
 		mouseClassRemapped = mappingResolver.mapClassName("intermediary", MOUSE_CLASS_INTERMEDIARY);
 		screenClassRemappedType = mappingResolver.mapClassName("intermediary", SCREEN_CLASS_INTERMEDIARY).replace('.', '/');
-		screenMouseScrolledRemappedType = mappingResolver.mapMethodName("intermediary", ELEMENT_CLASS_INTERMEDIARY, "method_25401", "(DDD)Z");
+		screenMouseScrolledRemappedType = mappingResolver.mapMethodName("intermediary", ELEMENT_CLASS_INTERMEDIARY, "method_25401", "(DDDD)Z");
 	}
 
 	@Override
